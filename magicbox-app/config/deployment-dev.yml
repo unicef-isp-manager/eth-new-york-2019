@@ -1,0 +1,34 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: magicbox-app-development-service
+spec:
+  selector:
+    app: magicbox-app-development
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicbox-app-development-deployment
+  labels:
+    app: magicbox-app-development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: magicbox-app-development
+  template:
+    metadata:
+      labels:
+        app: magicbox-app-development
+    spec:
+      containers:
+      - name: magicbox-app-development
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 80

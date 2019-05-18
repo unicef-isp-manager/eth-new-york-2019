@@ -1,0 +1,30 @@
+stages:
+- name: Build project
+  steps:
+  - runScriptConfig:
+      image: node:10.15
+      shellScript: make build
+- name: Publish image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: magicbox-app:${CICD_EXECUTION_SEQUENCE}
+- name: Deploy
+  steps:
+  # Production
+  - applyYamlConfigProd:
+      path: ./config/deployment-prod.yml
+      when:
+        branch: master
+        event: [ push, pull_request ]
+  # Development
+  - applyYamlConfig:
+      path: ./config/deployment-dev.yml
+      when:
+        branch: dev
+        event: [ push, pull_request ]
+
+# branch conditions for the pipeline
+branch:
+  include: [ master, dev ]
