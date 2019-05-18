@@ -4,3 +4,12 @@
 [submodule "magicbox-maps"]
 	path = magicbox-maps
 	url = https://github.com/unicef/magicbox-maps.git
+[submodule "magicbox-download-shapefiles"]
+	path = magicbox-download-shapefiles
+	url = https://github.com/unicef/magicbox-download-shapefiles.git
+[submodule "magicbox-import-shapefiles"]
+	path = magicbox-import-shapefiles
+	url = https://github.com/unicef/magicbox-import-shapefiles.git
+[submodule "magicbox-app"]
+	path = magicbox-app
+	url = https://github.com/unicef/magicbox-app.git
