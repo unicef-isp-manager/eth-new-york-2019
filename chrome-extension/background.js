@@ -1,26 +1,26 @@
 chrome.webRequest.onCompleted.addListener(
   function(details) {
-    
+
     //https://developer.chrome.com/extensions/extension
     //https://developer.chrome.com/extensions/storage
     //https://developer.chrome.com/extensions/webRequest#event-onCompleted
     //https://developer.chrome.com/extensions/getstarted
     //https://developer.chrome.com/extensions/manifest
-    
+
   });
 
 chrome.webRequest.onCompleted.onErrorOccurred(
   function(details) {
-    
+    ##call back methd
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+//document.addEventListener('DOMContentLoaded', function() {
     var checkPageButton = document.getElementById('checkPage');
     checkPageButton.addEventListener('click', function() {
-  
+
       chrome.tabs.getSelected(null, function(tab) {
         d = document;
-  
+
         var f = d.createElement('form');
         f.action = 'http://gtmetrix.com/analyze.html?bm';
         f.method = 'post';
