@@ -1,0 +1,6 @@
+[submodule "magicbox-open-api"]
+	path = magicbox-open-api
+	url = https://github.com/unicef/magicbox-open-api.git
+[submodule "magicbox-maps"]
+	path = magicbox-maps
+	url = https://github.com/unicef/magicbox-maps.git
