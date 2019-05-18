@@ -22,3 +22,11 @@ or simply
 make
 ```
 
+or
+
+`yarn install`
+
+and
+
+`yarn start`
+
