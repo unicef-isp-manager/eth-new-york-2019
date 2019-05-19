@@ -1,11 +1,9 @@
 {
-  "name": "No Cookies",
-  "description": "Removes 'Cookie' and 'Set-Cookie' headers.",
+  "name": "Blocksolid",
+  "description": "Monitors connectivity",
   "version": "1.0",
   "manifest_version": 2,
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
     "https://*/*",
     "http://*/*"
   ],
@@ -13,8 +11,7 @@
     "scripts": ["background.js"]
   },
   "browser_action": {
-    "default_icon": "unicef-logo.png",
-    "default_popup": "popup.html"
+    "default_icon": "unicef-logo.png"
    }
   
 }
