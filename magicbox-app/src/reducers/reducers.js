@@ -10,7 +10,7 @@ export const INITIAL_APP_STATE = {
   dataInfo: [],
   sidePanel: [],
   ui: {
-    sidePanelOpen: true,
+    sidePanelOpen: false,
     dataInfoOpen: false,
     isLoading: false,
     loading: 1,

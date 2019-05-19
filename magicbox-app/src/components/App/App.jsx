@@ -5,6 +5,8 @@ import * as Actions from '../../actions';
 import LoadingIndicator from '../LoadingIndicator';
 import SidePanel from '../SidePanel';
 import DataInfo from '../DataInfo';
+import DonationCard from '../DonationCard';
+
 
 // Load Map component dinamically -> code splitting
 const LazyMap = lazy(() => import(/* webpackChunkName: "map" */ '../Map'));
@@ -63,7 +65,10 @@ export class App extends Component {
       },
       toggleSidePanel,
       toggleDataInfo,
+      // handleDonationClick,
+      // app,
     } = this.props;
+    console.log('dataInfo', dataInfo);
 
     // Country click should only be available when no country is selected
     const clickCallback = !country ? onCountryClick : null;
@@ -85,6 +90,7 @@ export class App extends Component {
         {isLoading && <LoadingIndicator value={loading} />}
         <ReactReduxContext.Consumer>
           {({ store }) => (
+
             <Suspense fallback={<LoadingIndicator />}>
               <LazyMap
                 store={store}
@@ -93,8 +99,14 @@ export class App extends Component {
                 onLoad={this.setupMapAfterLoad}
               />
             </Suspense>
+
           )}
         </ReactReduxContext.Consumer>
+        <DonationCard
+          countryFromMap={dataInfo}
+        />
+
+
       </div>
     );
   }
@@ -111,8 +123,10 @@ App.propTypes = {
   toggleDataInfo: PropTypes.func.isRequired,
   enableBuilderMode: PropTypes.func.isRequired,
   onZoomLevelChange: PropTypes.func.isRequired,
+  // handleDonationClick: PropTypes.func.isRequired,
 };
 
+// const mapStateToProps = state => ({ app: state.app });
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
   dispatch,
@@ -122,6 +136,9 @@ const mapDispatchToProps = dispatch => ({
   toggleSidePanel: () => dispatch(Actions.toggleSidePanel()),
   toggleDataInfo: () => dispatch(Actions.toggleDataInfo()),
   onZoomLevelChange: () => dispatch(Actions.onZoomLevelChange()),
+  // handleDonationClick: (country, amount, currency) => {
+  //   dispatch(Actions.handleDonationClick(country, amount, currency));
+  // },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

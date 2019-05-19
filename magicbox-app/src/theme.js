@@ -8,6 +8,9 @@ export default createMuiTheme({
     secondary: {
       main: '#f9e900',
     },
+    light: {
+      main: '#ffffff',
+    },
   },
   typography: {
     useNextVariants: true,

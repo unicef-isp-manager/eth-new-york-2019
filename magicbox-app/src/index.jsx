@@ -6,6 +6,9 @@ import Root from './components/Root';
 import initializeStore from './store';
 import theme from './theme';
 
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+
 // Create browser history
 const history = createBrowserHistory();
 
