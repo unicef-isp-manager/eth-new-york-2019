@@ -2,6 +2,7 @@ pragma solidity >=0.4.22 <0.6.0;
 import "chainlink/contracts/ChainlinkClient.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
+
 contract DonationsManager is ChainlinkClient, Ownable {
   
     event UpdatedISP(
@@ -41,6 +42,10 @@ contract DonationsManager is ChainlinkClient, Ownable {
     }
 
     mapping (address => Donation) public donations;
+    
+    mapping (bytes32 => bool) public ISPstatuses;
+    
+    mapping (bytes32 => bytes32) public reciepts;
 
     modifier isISP(bytes32 name) {
         require(countries[name].currentISP == msg.sender, 'not the ISP for this country');
@@ -62,7 +67,7 @@ contract DonationsManager is ChainlinkClient, Ownable {
         countries[country].monthlyServiceCost = serviceCost;
         emit UpdatedISP(isp, country, serviceCost);
     }
-    function addDonation(bytes32 nameofCountry) public {
+    function addDonation(bytes32 nameofCountry) public payable {
         donations[msg.sender].donor = msg.sender;
         donations[msg.sender].amount = msg.value;
         donations[msg.sender].countryName = nameofCountry;
@@ -77,33 +82,43 @@ contract DonationsManager is ChainlinkClient, Ownable {
         emit WithdrawalISP(countryName, msg.sender, countries[countryName].monthlyServiceCost);
     }
 
-      function requestEthereumPrice(address _oracle, string _jobId)
+    function checkISPperformance(address _oracle, string _jobId, string _ISP)
     public
     onlyOwner
   {
     Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfill.selector); // edit
-    req.add("url", "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD");
-    req.add("path", "USD");
-    req.addInt("times", 100);
-    sendChainlinkRequestTo(_oracle, req, 1*LINK);
+    req.add("url", append("http://unicef-isp-manager.ngrok.io/isps/", _ISP));
+    
+    reciepts[sendChainlinkRequestTo(_oracle, req, 1*LINK)] = stringToBytes32(_ISP);
   }
 
-  function fulfill(bytes32 _requestId, uint256 _price)  // edit
+  function fulfill(bytes32 _requestId, bool _valid)  // edit
     public
     recordChainlinkFulfillment(_requestId)
   {
-    currentPrice = _price; //currentPrice var doesnät exist need action. C
+    ISPstatuses[reciepts[_requestId]] = _valid;
+    delete reciepts[_requestId];
   }
+
+    function append(string a, string b) internal pure returns (string) {
+
+        return string(abi.encodePacked(a, b));
+    }
 
     function stringToBytes32(string memory source) private pure returns (bytes32 result) {
     bytes memory tempEmptyStringTest = bytes(source);
     if (tempEmptyStringTest.length == 0) {
       return 0x0;
     }
+    
 
     assembly {
       result := mload(add(source, 32))
     }
+  }
+  
+  function getStatus(string _ISP) public view returns (bool) {
+      return ISPstatuses[stringToBytes32(_ISP)];
   }
 
 
