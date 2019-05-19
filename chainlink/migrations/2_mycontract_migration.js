@@ -1,4 +1,5 @@
-let MyContract = artifacts.require('MyContract')
+let DonationsManager = artifacts.require('DonationsManager')
+
 let LinkToken = artifacts.require('LinkToken')
 let Oracle = artifacts.require('Oracle')
 
@@ -14,6 +15,6 @@ module.exports = (deployer, network) => {
   } else {
     // For live networks, use the 0 address to allow the ChainlinkRegistry
     // contract automatically retrieve the correct address for you
-    deployer.deploy(MyContract, '0x0000000000000000000000000000000000000000')
+    deployer.deploy(DonationsManager)
   }
 }
