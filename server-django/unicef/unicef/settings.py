@@ -25,7 +25,7 @@ SECRET_KEY = 'h_hy3o&k(4r(w3#pb*%@9pu6e@xq8z@nzzclp$ghetho7#o@+y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['2b7bd77a.ngrok.io']
+ALLOWED_HOSTS = ['unicef-isp-manager.ngrok.io']
 
 
 # Application definition
