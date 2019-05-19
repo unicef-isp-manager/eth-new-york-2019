@@ -78,9 +78,9 @@ export const fetchedDataUpdater = (state, action) => ({
     isLoading: false,
     error: null,
     loading: 100,
-    dataInfoOpen: typeof action.payload.appConfig.dataInfoOpen === 'undefined'
-      ? state.ui.dataInfoOpen
-      : action.payload.appConfig.dataInfoOpen,
+    // dataInfoOpen: typeof action.payload.appConfig.dataInfoOpen === 'undefined'
+    //   ? state.ui.dataInfoOpen
+    //   : action.payload.appConfig.dataInfoOpen,
   },
   data: {
     ...state.data,

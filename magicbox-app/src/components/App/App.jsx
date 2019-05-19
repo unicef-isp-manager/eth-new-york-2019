@@ -62,13 +62,16 @@ export class App extends Component {
           sidePanelOpen,
           dataInfoOpen,
         },
+        data: {
+          dataset,
+        },
       },
       toggleSidePanel,
       toggleDataInfo,
       // handleDonationClick,
       // app,
     } = this.props;
-    console.log('dataInfo', dataInfo);
+    console.log('dataInfo', dataset);
 
     // Country click should only be available when no country is selected
     const clickCallback = !country ? onCountryClick : null;
@@ -103,7 +106,8 @@ export class App extends Component {
           )}
         </ReactReduxContext.Consumer>
         <DonationCard
-          countryFromMap={dataInfo}
+          countryFromMap={country}
+          dataset={dataset}
         />
 
 

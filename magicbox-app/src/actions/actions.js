@@ -192,29 +192,29 @@ const enableBuilderMode = () => dispatch => dispatch(updateVisData({}, { readOnl
 //   // return 'fortmatic';
 // };
 
-// const handleDonationClick = (country, amount, currency) => {
-//   console.log('COUNTRY, AMOUNT, CURRENCY', country, amount, currency);
-//   if (!window.web3) {
-//     getWeb3();
-//   } else {
-// sort out currency
-// convert amount
-// const { utils } = window.web3;
-// const value = utils.toWei(utils.toBN(amount), 'finney');
-// sendDonation
-// const contract = new window.web3.eth.Contract(abi, address);
-// window.web3.eth.getAccounts().then((accounts) => {
-//   contract.methods.addDonation(country)
-//     .send({
-//       from: accounts[0],
-//       value,
-//       gas: 300000,
-//     })
-//     .once('transactionHash', (hash) => { console.log(hash); })
-//     .once('receipt', (receipt) => { console.log(receipt); });
-// });
-//   }
-// };
+const handleDonationClick = (country, amount, currency) => {
+  console.log('COUNTRY, AMOUNT, CURRENCY', country, amount, currency);
+  // if (!window.web3) {
+  //   getWeb3();
+  // } else {
+  //   // sort out currency
+  //   // convert amount
+  //   const { utils } = window.web3;
+  //   const value = utils.toWei(utils.toBN(amount), 'finney');
+  //   // sendDonation
+  //   const contract = new window.web3.eth.Contract(abi, address);
+  //   window.web3.eth.getAccounts().then((accounts) => {
+  //     contract.methods.addDonation(country)
+  //       .send({
+  //         from: accounts[0],
+  //         value,
+  //         gas: 300000,
+  //       })
+  //       .once('transactionHash', (hash) => { console.log(hash); })
+  //       .once('receipt', (receipt) => { console.log(receipt); });
+  //   });
+  // }
+};
 
 
 export {
@@ -231,5 +231,5 @@ export {
   enableBuilderMode,
   onZoomLevelChange,
   setVisibleLayers,
-  // handleDonationClick,
+  handleDonationClick,
 };

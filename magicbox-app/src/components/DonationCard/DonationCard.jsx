@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
@@ -57,13 +57,24 @@ const currencies = [
 ];
 
 function DonationCard(props) {
-  const { countryFromMap } = props;
-  console.log('COUNTRYFROMMAP', countryFromMap);
+  const { countryFromMap, dataset } = props;
+  // console.log('DATASET', dataset);
+  // console.log('COUNTRYFROMMAP', countryFromMap);
+  if (dataset) {
+    const countries = dataset.datasets[0].data.allData
+      .map(set => ({ value: set[0], label: set[1] }));
+    console.log('COUNTRIES', countries);
+  }
+
   const classes = useStyles();
   const [values, setValues] = useState({
     country: countryFromMap,
-    amount: 0,
+    amount: '',
     currency: 'USD',
+  });
+
+  useEffect(() => {
+    setValues({ country: countryFromMap });
   });
 
   const handleChange = name => (event) => {
@@ -174,6 +185,7 @@ function DonationCard(props) {
 DonationCard.propTypes = {
   countryFromMap: PropTypes.string,
   // handleDonationClick: PropTypes.func.isRequired,
+  dataset: PropTypes.shape({}).isRequired,
 };
 
 DonationCard.defaultProps = {
