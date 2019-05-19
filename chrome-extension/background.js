@@ -1,18 +1,13 @@
-chrome.webRequest.onCompleted.addListener(
-  function(details) {
-    
-    //https://developer.chrome.com/extensions/extension
-    //https://developer.chrome.com/extensions/storage
-    //https://developer.chrome.com/extensions/webRequest#event-onCompleted
-    //https://developer.chrome.com/extensions/getstarted
-    //https://developer.chrome.com/extensions/manifest
-    
-  });
 
-chrome.webRequest.onCompleted.onErrorOccurred(
-  function(details) {
-    
-  });
+//while(1){
+ 
+setInterval(
+  function(){ 
+    //send post to the server
+  }, 3000);
+
+
+
 
   document.addEventListener('DOMContentLoaded', function() {
     var checkPageButton = document.getElementById('checkPage');
