@@ -1,0 +1,55 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: magicbox-app-service
+spec:
+  selector:
+    app: magicbox-app
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: magicbox-app-ingress
+  namespace: magicbox
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: magicbox.unicef.io
+    http:
+      paths:
+      - backend:
+          serviceName: magicbox-app-service
+          servicePort: 80
+  tls:
+  - hosts:
+    - magicbox.unicef.io
+    secretName: star-unicef-io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicbox-app
+  labels:
+    app: magicbox-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: magicbox-app
+  template:
+    metadata:
+      labels:
+        app: magicbox-app
+    spec:
+      containers:
+      - name: magicbox-app
+        image: mikefab/magicbox-app:6dffae015ff81cbd20a360ad50811fefb1d06a7f
+        #${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 80
