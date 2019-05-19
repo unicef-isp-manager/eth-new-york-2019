@@ -1013,7 +1013,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     public
     onlyOwner
   {
-    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumPrice.selector);
+    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumPrice.selector); // fullfill method
     req.add("url", "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD");
     req.add("path", "USD");
     req.addInt("times", 100);
@@ -1024,7 +1024,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     public
     onlyOwner
   {
-    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumChange.selector);
+    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumChange.selector); //
     req.add("url", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD");
     req.add("path", "RAW.ETH.USD.CHANGEPCTDAY");
     req.addInt("times", 1000000000);
@@ -1035,7 +1035,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     public
     onlyOwner
   {
-    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumLastMarket.selector);
+    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillEthereumLastMarket.selector); //
     req.add("url", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD");
     string[] memory path = new string[](4);
     path[0] = "RAW";
@@ -1046,7 +1046,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
 
-  function fulfillEthereumPrice(bytes32 _requestId, uint256 _price)
+  function fulfillEthereumPrice(bytes32 _requestId, uint256 _price)  // fill in   /// curl command? json?
     public
     recordChainlinkFulfillment(_requestId)
   {
@@ -1090,4 +1090,79 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     }
   }
 
+}
+
+
+pragma solidity >=0.4.22 <0.6.0;
+
+contract DonationManager {
+    event UpdatedISP(
+      address indexed isp, 
+      string indexed countryName,
+      uint indexed monthlyServiceCost
+    );
+
+    event DonationAdded(
+      string countryName,
+      address donor, 
+      uint amount, 
+      uint time
+    ):
+
+    event WithdrawalISP(
+      string countryName,
+      address ISP, 
+      uint amount
+    );
+
+    address payable public _owner;
+
+    struct Country {
+      address currentISP;
+      uint balance;
+      uint monthlyServiceCost;
+    }
+    mapping (string => Country) public countries;
+
+    struct Donation {
+      address donor;
+      uint amount;
+      uint timestamp;
+      string countryName;
+    }
+
+    mapping (address => Donation) public donations;
+
+    modifier isISP(string name) {
+        require(countries[name].currentISP == msg.sender, 'not the ISP for this country');
+        _;
+    }
+    modifier onlyOwner() {
+        require(msg.sender == _owner, 'not the owner');
+    _;
+    }
+
+    constructor() public {
+        _owner = msg.sender;
+    }
+    
+    function updateISP(address isp, string country, uint serviceCost) public onlyOwner {
+        countries[country].currentISP = isp;
+        monthlyServiceCost = serviceCost;
+        emit UpdatedISP(isp, country, serviceCost);
+    }
+    function addDonation(string nameofCountry) public payable {
+        donations[msg.sender].donor = msg.sender;
+        donations[msg.sender].amount = msg.value;
+        donations[msg.sender].countryName = nameofCountry;
+        donations[msg.sender].timestamp = now;
+        emit DonationAdded(nameOfCountry, msg.sender, msg.value, now);
+    }
+    function withdraw(string countryName) public isISP {
+        require(countries[countryName].currentISP == msg.sender, 'not the ISP for this country');
+        require(countries[countryName.balance >= countries[countryName].monthlyServiceCost, 'not enough funding for cover monthly cost');
+        countries[countryName.balance =- countries[countryName].monthlyServiceCost;
+        msg.sender.transfer(countries[countryName].monthlyServiceCost);
+        emit WithdrawalISP(countryName, msg.sender, countries[countryName].monthlyServiceCost);
+    }
 }
