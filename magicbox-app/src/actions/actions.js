@@ -1,4 +1,6 @@
 import { createAction } from 'redux-actions';
+// import Fortmatic from 'fortmatic';
+// import Web3 from 'web3';
 import {
   addDataToMap,
   onLayerClick,
@@ -8,6 +10,9 @@ import {
 import Processors from 'kepler.gl/processors';
 import { push } from 'connected-react-router';
 import ActionTypes from '../constants/action-types';
+// import abi from '../contracts/donationsManagerABI';
+// import address from '../contracts/donationsManagerAddress';
+
 
 const [
   noop,
@@ -18,6 +23,7 @@ const [
   errorFetchingData,
   toggleSidePanel,
   toggleDataInfo,
+  // handleDonationClick,
 ] = [
   ActionTypes.NOOP,
   ActionTypes.COUNTRY_SELECT,
@@ -27,6 +33,7 @@ const [
   ActionTypes.ERROR_FETCHING_DATA,
   ActionTypes.TOGGLE_SIDE_PANEL,
   ActionTypes.TOGGLE_DATA_INFO,
+  // ActionTypes.HANDLE_DONATION_CLICK,
 ].map(action => createAction(action));
 
 // On country click action
@@ -175,6 +182,41 @@ const setVisibleLayers = visibleLayersIds => (dispatch, getState) => {
 // Enable builder mode
 const enableBuilderMode = () => dispatch => dispatch(updateVisData({}, { readOnly: false }, {}));
 
+// const fortmaticTestApiKey = 'pk_test_FA4473198B4649E4';
+
+// const getWeb3 = () => {
+//   // const fm = new Fortmatic(fortmaticTestApiKey);
+//   // window.web3 = new Web3(fm.getProvider());
+//   // window.web3.currentProvider.enable();
+//   console.log('fortmatic');
+//   // return 'fortmatic';
+// };
+
+const handleDonationClick = (country, amount, currency) => {
+  console.log('COUNTRY, AMOUNT, CURRENCY', country, amount, currency);
+  // if (!window.web3) {
+  //   getWeb3();
+  // } else {
+  //   // sort out currency
+  //   // convert amount
+  //   const { utils } = window.web3;
+  //   const value = utils.toWei(utils.toBN(amount), 'finney');
+  //   // sendDonation
+  //   const contract = new window.web3.eth.Contract(abi, address);
+  //   window.web3.eth.getAccounts().then((accounts) => {
+  //     contract.methods.addDonation(country)
+  //       .send({
+  //         from: accounts[0],
+  //         value,
+  //         gas: 300000,
+  //       })
+  //       .once('transactionHash', (hash) => { console.log(hash); })
+  //       .once('receipt', (receipt) => { console.log(receipt); });
+  //   });
+  // }
+};
+
+
 export {
   onCountrySelect,
   onCountryClick,
@@ -189,4 +231,5 @@ export {
   enableBuilderMode,
   onZoomLevelChange,
   setVisibleLayers,
+  handleDonationClick,
 };
