@@ -15,9 +15,13 @@ File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV fil
 ![alt text](./resources/Gapfinder_your_data.png)
 
 **Step 1:** Pick a chart: Bubbles
+
 **Step 2:** Choose how your data is arranged: Time goes right
+
 **Step 3:** Pick a file: *Congo provinces.csv*
+
 **Optional:** Time values look like this: choose year from the dropdown menu
+
 - Y: connected schools (%)
 - X: donations (ETH)
 - Color: bandwidth
