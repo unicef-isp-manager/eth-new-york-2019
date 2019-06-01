@@ -5,7 +5,7 @@ var imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5
 var downloadSize = 4995374; //bytes
 
 
-function ShowProgressMessage(bandwidth) {
+function PostInfo(bandwidth) {
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -23,7 +23,25 @@ function ShowProgressMessage(bandwidth) {
   xhr.send(null);
   
 }
+function UpdateIcon(bandwidth){
 
+    if(bandwidth < 3000){
+      chrome.browserAction.setIcon({
+        path: "icons/red-19px.png"
+      });
+    }
+    else if(bandwidth < 10000){
+      chrome.browserAction.setIcon({
+        path: "icons/yellow-19px.png"
+      });
+    }
+    else {
+      chrome.browserAction.setIcon({
+        path: "icons/blue-19px.png"
+      });
+    }
+  
+}
 function MeasureConnectionSpeed() {
     var startTime, endTime;
     var download = new Image();
@@ -46,7 +64,8 @@ function MeasureConnectionSpeed() {
         var speedBps = (bitsLoaded / duration).toFixed(2);
         var speedKbps = (speedBps / 1024).toFixed(2);
         var speedMbps = (speedKbps / 1024).toFixed(2);
-        ShowProgressMessage(speedKbps);
+        PostInfo(speedKbps);
+        UpdateIcon(speedKbps);
     }
 }
 

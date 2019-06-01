@@ -11,7 +11,7 @@ class Prob(models.Model):
   isp = models.ForeignKey('Isp', on_delete=models.CASCADE)
 
   def __str__(self): 
-    return self.timestamp
+    return str(self.timestamp) + ": "+ str(self.bandwidth) + "Kbps"
 
 class Isp(models.Model):
   address = models.CharField(max_length=40)
