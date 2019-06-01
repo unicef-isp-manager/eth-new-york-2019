@@ -28,17 +28,27 @@ File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV fil
 - Size: population
 ## Two schools in Kinshasa:
 File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV file
+
 **Step 1:** Pick a chart:  Lines
+
 **Step 2:** Choose how your data is arranged: Time goes down
+
 **Step 3:** Pick a file: *Lycee Mpiko connectivity report.csv*
+
 **Optional:** Time values look like this: choose day from the dropdown menu
+
 - Color: school
 ## ISP performance vs donations:
 File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV file
+
 **Step 1:** Pick a chart - bubbles
+
 **Step 2:** Choose how your data is arranged: Time goes down
+
 **Step 3:** Pick a file: *ISP data.csv*
+
 **Optional:** Time values look like this: choose year from the dropdown menu
+
 - Y: Data provided (Tbits)
 - X: Connected schools
 - Color: Internet service provider
