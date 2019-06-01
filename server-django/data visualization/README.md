@@ -5,10 +5,10 @@
 
 
 ##Internet users by countries:
-    - File :arrow_forward: New chart :arrow_forward: Gapminder data 
-	  - Chart type - maps
-	  - Color - internet users (move year handle to 2000-1017 no data outside of this timeframe)
-    - Size - population
+    * File :arrow_forward: New chart :arrow_forward: Gapminder data 
+	  * Chart type - maps
+	  * Color - internet users (move year handle to 2000-1017 no data outside of this timeframe)
+    * Size - population
 ##Donations vs connected schools:
 	  - File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV file 
 ![alt text](./Gapfinder-your data.png)
@@ -16,10 +16,10 @@
 	  Step 2: Choose how your data is arranged: Time goes right
     Step 3: Pick a file: *Congo provinces.csv*
     Optional: Time values look like this: choose year from the dropdown menu
-      - Y: connected schools (%)
-      - X: donations (ETH)
-      - Color: bandwidth
-      - Size: population
+      * Y: connected schools (%)
+      * X: donations (ETH)
+      * Color: bandwidth
+      * Size: population
 ##Two schools in Kinshasa:
 	  - File :arrow_forward: New chart :arrow_forward: your data :arrow_forward: CSV file
     Step 1: Pick a chart:  Lines
