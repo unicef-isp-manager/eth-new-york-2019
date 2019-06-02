@@ -11,17 +11,17 @@
 ```
 
 3. Open browser and type 127.0.0.1:8000/admin in the address bar:
-![alt text](./resources/admin-login.png)
+  ![alt text](./resources/admin-login.png)
 
-Username: admin
+  Username: admin
 
-Password: admin-pass
+  Password: admin-pass
 
-Super user may add, edit or delete schools or isp:
-![alt text](./resources/admin-view.png)
+  Super user may add, edit or delete schools or isp:
+  ![alt text](./resources/admin-view.png)
 
 
-##Additional commands
+4. Additional commands
 
 To change admin password:
 ```console
