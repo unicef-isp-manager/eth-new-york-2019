@@ -1,5 +1,6 @@
 1. Install python 3.7 follow instructions [here](https://realpython.com/installing-python/)
 
+
 2. Install django and djangorestframework packages:
 ```console
 > pip install django
