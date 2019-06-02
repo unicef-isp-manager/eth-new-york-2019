@@ -1,6 +1,6 @@
 install python 3.7 follow instructions [here](https://realpython.com/installing-python/)
 
-``console
+```console
 > pip install django
 > pip install djangorestframework
 > pip install sqlparse
@@ -8,7 +8,7 @@ install python 3.7 follow instructions [here](https://realpython.com/installing-
 > cd server-django\\unicef
 
 > python manage.py runserver
-``
+```
 
 
 ##Additional commands
