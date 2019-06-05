@@ -1,15 +1,17 @@
 # Unicef Internet Service Provider monitoring
 
-**Inspiration**
-Children around the world lack the connectivity regions like North America and Western Europe have. This brings about huge information asymmetries that cause the region to lag behind in professional and workforce development. Therefore, in an effort to bring internet connectivity and empower people residing in developing regions we are building a dashboard that will allow Development workers on the ground and from abroad monitor the connectivity status of the region they are working with and provide accountability to local Internet Service Provider's and report connection outages.
+![Blocksolid architecture](./Blocksolid-architecture.png)
 
-**What it does**
-Our dashboard will allow development workers on the ground to monitor the status of internet connectivity in specific regions across the world, automate the monthly internet payment to ISPs, monitor the general traffic of the sites that presently have internet access, validate the use of internet connectivity, and enable development workers to have a high level view of internet connectivity and enable providers to easily spot regions where they could expand to and provide critical information services to aid the population by providing them with access to information and prevent the spreading of disease and bring new tech skills to people across the regions served. Our platform also enables individuals to give donations for regions to have access to the internet and uses Smart Contracts that are connected to internet monitoring script with the data fed through chainlink to execute the Smart contract if the ISP has breached the contract
+This project allows people to donate Eth to specific countries to pay for internet service to schools. It monitors the connectivity of each school with a chrome extension that needs to be installed on each computer at the school. The data collected from the extension gets sent to a server. This data is then used to determine if the internet service provider (ISP) is performing above threshold or not. This data gets sent to the smart contract through a Chainlink oracle and gets used to allow the ISP to call the withdraw function. 
 
-**How we built it**
-We are using Smart Contracts with off-chain data fed through Chainlink into our Smart Contract (enabling execution if certain parameters are met)
+The magicbox-app is the front end. In the corner is the donation component. When a country on the map is selected it grabs the name. That gets sent along with the donation amount (in Eth) to the smart contract. 
 
-**Challenges we ran into**
-Script to monitor the internet connectivity. Version issues with web3. 
+The smart contract, DonationsManager, is in the chainlink folder. It extends Ownable,  allowing only owners to call certain functions. It holds all of the donations, currently organized by country. ISPs and their monthly fees are entered by the owners. Currently deployed on Rinkeby at 0xaf5849d6454bfd00820bfa6c645120efad7a5fd1
+
+The chrome extension downloads an image of known size, measures the time to complete, and reports that to the server at regular interval. The icon in the tray changes color based on the speed data.
+
+The server collects the data from the chrome extension, determines if the threshold was met, and serves an endpoint for the Chainlink oracle to call.  
+
+This project is a proof of concept build at the EthNewYork hackathon. The plan is to turn the repo into an open source project with a clear roadmap and guidelines to contribute. The ‘wiki’ will have background information for the project. The ‘issues’ will have tasks that are ready for development. The ‘projects’ are scrum boards for each micro-service. The telegram channel for the project is [Telegram: Contact @Blocksolid](https://t.me/Blocksolid)
 
 
