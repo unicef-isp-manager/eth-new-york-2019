@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '15px',
+    padding: '0 15px',
     // flexWrap: 'wrap',
     // alignItems: 'center',
     width: '200px',
@@ -35,6 +35,10 @@ const useStyles = makeStyles(theme => ({
   menu: {
     width: 200,
   },
+  button: {
+    marginTop: '16px',
+    marginBottom: '16px'
+  }
 }));
 
 const currencies = [
@@ -57,25 +61,34 @@ const currencies = [
 ];
 
 function DonationCard(props) {
-  const { countryFromMap, dataset } = props;
-  // console.log('DATASET', dataset);
-  // console.log('COUNTRYFROMMAP', countryFromMap);
-  if (dataset) {
-    const countries = dataset.datasets[0].data.allData
-      .map(set => ({ value: set[0], label: set[1] }));
-    console.log('COUNTRIES', countries);
-  }
+  const { countryFromMap, dataset, handleDonationClick } = props;
 
   const classes = useStyles();
+  
+  // values for TextFields
   const [values, setValues] = useState({
-    country: countryFromMap,
+    countries: [],
+    country: '',
     amount: '',
     currency: 'USD',
   });
-
+  
+  const [countries, setCountries] = useState(null);
+  
   useEffect(() => {
-    setValues({ country: countryFromMap });
-  });
+    if (dataset) {
+      // console.log('DATASET', dataset);
+      const countries = dataset.datasets[0].data.allData
+      .map(set => ({ value: set[2], label: set[1] }));
+      console.log('COUNTRIES', countries);
+  
+      setCountries(countries);
+    }
+  }, [dataset]);
+  
+  useEffect(() => {
+    setValues({ ...values, country: countryFromMap });
+  }, [values, countryFromMap]);
 
   const handleChange = name => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -94,11 +107,16 @@ function DonationCard(props) {
 
       {countryFromMap ? (
         <TextField
+          // autoFocus={true}
           id="outlined-read-only-input"
-          label="Country"
-          // defaultValue="Hello World"
+          // label="Country"
+          // label={values.country}
+          // defaultValue={values.country} // does not appear
           className={classes.textField}
           margin="normal"
+          InputLabelProps={{
+            focused: true
+          }}
           InputProps={{
             readOnly: true,
           }}
@@ -120,11 +138,11 @@ function DonationCard(props) {
               className: classes.menu,
             },
           }}
-          helperText="Please select your currency"
+          // helperText="Please select your currency"
           margin="normal"
           variant="outlined"
         >
-          {currencies.map(option => (
+          {countries && countries.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
@@ -137,7 +155,7 @@ function DonationCard(props) {
 
       <TextField
         id="outlined-name"
-        label="Amount in Finney"
+        label="Amount &diams; in Finney"
         className={classes.textField}
         value={values.amount}
         onChange={handleChange('amount')}
@@ -171,9 +189,10 @@ function DonationCard(props) {
       {/* button */}
       <Button
         variant="contained"
-        color="primary"
+        // color="primary"
+        color="secondary"
         className={classes.button}
-        // onClick={handleDonationClick(values.country, values.amount, values.currency)}
+        onClick={() => handleDonationClick(values.country, values.amount, values.currency)}
       >
         Donate
       </Button>

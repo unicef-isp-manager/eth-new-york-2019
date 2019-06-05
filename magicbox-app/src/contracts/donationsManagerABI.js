@@ -282,8 +282,8 @@ const abi = [
     ],
     name: 'addDonation',
     outputs: [],
-    payable: false,
-    stateMutability: 'nonpayable',
+    payable: true,
+    stateMutability: 'payable',
     type: 'function',
   },
   {

@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
-// import Fortmatic from 'fortmatic';
-// import Web3 from 'web3';
+import Fortmatic from 'fortmatic';
+import Web3 from 'web3';
+import { toWei, toBN, asciiToHex } from 'web3-utils';
 import {
   addDataToMap,
   onLayerClick,
@@ -10,8 +11,8 @@ import {
 import Processors from 'kepler.gl/processors';
 import { push } from 'connected-react-router';
 import ActionTypes from '../constants/action-types';
-// import abi from '../contracts/donationsManagerABI';
-// import address from '../contracts/donationsManagerAddress';
+import abi from '../contracts/donationsManagerABI';
+import address from '../contracts/donationsManagerAddress';
 
 
 const [
@@ -23,7 +24,7 @@ const [
   errorFetchingData,
   toggleSidePanel,
   toggleDataInfo,
-  // handleDonationClick,
+  setWeb3Provider,
 ] = [
   ActionTypes.NOOP,
   ActionTypes.COUNTRY_SELECT,
@@ -33,7 +34,7 @@ const [
   ActionTypes.ERROR_FETCHING_DATA,
   ActionTypes.TOGGLE_SIDE_PANEL,
   ActionTypes.TOGGLE_DATA_INFO,
-  // ActionTypes.HANDLE_DONATION_CLICK,
+  ActionTypes.SET_WEB3_PROVIDER,
 ].map(action => createAction(action));
 
 // On country click action
@@ -182,38 +183,72 @@ const setVisibleLayers = visibleLayersIds => (dispatch, getState) => {
 // Enable builder mode
 const enableBuilderMode = () => dispatch => dispatch(updateVisData({}, { readOnly: false }, {}));
 
-// const fortmaticTestApiKey = 'pk_test_FA4473198B4649E4';
+const fortmaticTestApiKey = 'pk_test_FA4473198B4649E4';
 
-// const getWeb3 = () => {
-//   // const fm = new Fortmatic(fortmaticTestApiKey);
-//   // window.web3 = new Web3(fm.getProvider());
-//   // window.web3.currentProvider.enable();
-//   console.log('fortmatic');
-//   // return 'fortmatic';
+// const getWeb3 = () => dispatch => {
+// 
 // };
 
-const handleDonationClick = (country, amount, currency) => {
+const handleDonationClick = (country, amount, currency) => (dispatch, getState) => {
   console.log('COUNTRY, AMOUNT, CURRENCY', country, amount, currency);
-  // if (!window.web3) {
-  //   getWeb3();
-  // } else {
-  //   // sort out currency
-  //   // convert amount
-  //   const { utils } = window.web3;
-  //   const value = utils.toWei(utils.toBN(amount), 'finney');
-  //   // sendDonation
-  //   const contract = new window.web3.eth.Contract(abi, address);
-  //   window.web3.eth.getAccounts().then((accounts) => {
-  //     contract.methods.addDonation(country)
-  //       .send({
-  //         from: accounts[0],
-  //         value,
-  //         gas: 300000,
-  //       })
-  //       .once('transactionHash', (hash) => { console.log(hash); })
-  //       .once('receipt', (receipt) => { console.log(receipt); });
-  //   });
-  // }
+  
+  const { app: { web3: { provider }}} = getState();
+  console.log('PROVIDER', provider);
+
+  if (!provider) {
+    // getWeb3();
+    console.log('GET WEB3!');
+    // Modern dapp browsers...
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        try {
+            // Request account access if needed
+            window.ethereum.enable();
+            // Acccounts now exposed
+            console.log("MetaMask");
+            // set provider "metamask";
+            dispatch(setWeb3Provider('metamask'));
+        } catch (error) {
+            // User denied account access...
+            console.log('USER DENIED ACCOUNT ACCESS');
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+        // Acccounts always exposed
+        console.log("browser");
+        // return "browser";
+        dispatch(setWeb3Provider('browser'));
+    }
+    // Non-dapp browsers...
+    else {
+      const fm = new Fortmatic(fortmaticTestApiKey);
+      window.web3 = new Web3(fm.getProvider());
+      // window.web3.currentProvider.enable();
+      console.log("fortmatic");
+      // return "fortmatic";
+      dispatch(setWeb3Provider('fortmatic'));
+    }
+  } else {
+    console.log('PROVIDER', provider);
+    // sort out currency
+    // convert amount
+    // const utils = window.web3.utils;
+    const value = toWei(toBN(amount), 'finney');
+    // sendDonation
+    const contract = new window.web3.eth.Contract(abi, address);
+    window.web3.eth.getAccounts().then((accounts) => {
+      contract.methods.addDonation(asciiToHex(country))
+        .send({
+          from: accounts[0],
+          value,
+          gas: 300000,
+        })
+        .once('transactionHash', (hash) => { console.log(hash); })
+        .once('receipt', (receipt) => { console.log(receipt); });
+    });
+  }
 };
 
 
