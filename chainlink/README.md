@@ -1,12 +1,12 @@
-# Chainlink Truffle Box
+# Ethereum Smart Contract
 
-Implementation of [how to make a Chainlinked contract](https://docs.chain.link/docs/getting-started).
+The DonationsManager contract does a few things. It accepts donations, stores the current ISP provider, receives data on connectivity from a server through a chainlink oracle, and allows the ISPs to withdraw funds, or not. For PoC the districts are countries.
 
-## Requirements
+## Running Locally
 
-- NPM
+This is a truffle box project. 
 
-## Installation
+### Installation
 
 ```bash
 npm install
@@ -37,3 +37,10 @@ For deploying to live networks, Truffle will use `truffle-hdwallet-provider` for
 ```bash
 npm run migrate:live
 ```
+
+<!-- ### Remix -->
+
+<!-- A version of this contract is already deployed on Rinkeby at 0x458C5C6e8fd90D0432Bb4Ed370A18a1A07f875Bb -->
+
+
+Implementation of [how to make a Chainlinked contract](https://docs.chain.link/docs/getting-started).

@@ -12,7 +12,7 @@ import DonationCard from '../DonationCard';
 const LazyMap = lazy(() => import(/* webpackChunkName: "map" */ '../Map'));
 
 // eslint-disable-next-line
-const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
 export class App extends Component {
   componentDidMount() {
@@ -68,10 +68,9 @@ export class App extends Component {
       },
       toggleSidePanel,
       toggleDataInfo,
-      // handleDonationClick,
+      handleDonationClick,
       // app,
     } = this.props;
-    console.log('dataInfo', dataset);
 
     // Country click should only be available when no country is selected
     const clickCallback = !country ? onCountryClick : null;
@@ -108,6 +107,7 @@ export class App extends Component {
         <DonationCard
           countryFromMap={country}
           dataset={dataset}
+          handleDonationClick={handleDonationClick}
         />
 
 
@@ -127,7 +127,7 @@ App.propTypes = {
   toggleDataInfo: PropTypes.func.isRequired,
   enableBuilderMode: PropTypes.func.isRequired,
   onZoomLevelChange: PropTypes.func.isRequired,
-  // handleDonationClick: PropTypes.func.isRequired,
+  handleDonationClick: PropTypes.func.isRequired,
 };
 
 // const mapStateToProps = state => ({ app: state.app });
@@ -140,9 +140,9 @@ const mapDispatchToProps = dispatch => ({
   toggleSidePanel: () => dispatch(Actions.toggleSidePanel()),
   toggleDataInfo: () => dispatch(Actions.toggleDataInfo()),
   onZoomLevelChange: () => dispatch(Actions.onZoomLevelChange()),
-  // handleDonationClick: (country, amount, currency) => {
-  //   dispatch(Actions.handleDonationClick(country, amount, currency));
-  // },
+  handleDonationClick: (country, amount, currency) => {
+    dispatch(Actions.handleDonationClick(country, amount, currency));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -9,6 +9,7 @@ const ActionTypes = Object.keys({
   ENABLE_BUILDER_MODE: null,
   TOGGLE_SIDE_PANEL: null,
   TOGGLE_DATA_INFO: null,
+  SET_WEB3_PROVIDER: null,
 }).reduce((acc, el) => ({ ...acc, [el]: el }), {});
 
 export default ActionTypes;

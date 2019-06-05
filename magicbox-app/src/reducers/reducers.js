@@ -22,6 +22,10 @@ export const INITIAL_APP_STATE = {
     datasetName: DEFAULT_DATASET_NAME,
     dataset: null,
   },
+  web3: {
+    provider: null,
+    
+  }
 };
 
 // Update country name
@@ -107,6 +111,7 @@ export const toggleSidePanelUpdater = state => ({
     sidePanelOpen: !state.ui.sidePanelOpen,
   },
 });
+
 // toggle data info modal
 export const toggleDataInfoUpdater = state => ({
   ...state,
@@ -114,6 +119,14 @@ export const toggleDataInfoUpdater = state => ({
     ...state.ui,
     dataInfoOpen: !state.ui.dataInfoOpen,
   },
+});
+
+export const setWeb3Provider = (state, action) => ({
+  ...state,
+  web3: {
+    ...state.web3,
+    provider: action.payload,
+  }
 });
 
 export default {
@@ -124,4 +137,5 @@ export default {
   [ActionTypes.ERROR_FETCHING_DATA]: errorFetchingDataUpdater,
   [ActionTypes.TOGGLE_SIDE_PANEL]: toggleSidePanelUpdater,
   [ActionTypes.TOGGLE_DATA_INFO]: toggleDataInfoUpdater,
+  [ActionTypes.SET_WEB3_PROVIDER]: setWeb3Provider,
 };
